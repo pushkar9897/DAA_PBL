@@ -1,72 +1,72 @@
 import java.util.ArrayList;
 
 public class CrosswordGeneratorBacktracking {
-    static final int GRID_SIZE = 10; // Size of the grid
+    static final int GRID_SIZE = 10; 
     static char[][] grid = new char[GRID_SIZE][GRID_SIZE];
     static ArrayList<String> words = new ArrayList<>();
 
     public static void main(String[] args) {
         initializeGrid();
 
-        // List of words to place in the crossword
+       
         words.add("JAVA");
         words.add("PROGRAM");
         words.add("CROSSWORD");
         words.add("ALGORITHM");
         words.add("LOGIC");
 
-        // Attempt to solve the crossword puzzle using backtracking
+        
         if (solve(0)) {
-            printGrid(); // Print the solution if successful
+            printGrid(); 
         } else {
             System.out.println("Could not generate a valid crossword with the given words.");
         }
     }
 
-    // Initialize the grid with empty spaces
+   
     private static void initializeGrid() {
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
-                grid[i][j] = '.'; // Empty space
+                grid[i][j] = '.';
             }
         }
     }
 
-    // Solve the crossword puzzle by placing all words using backtracking
+   
     private static boolean solve(int wordIndex) {
         if (wordIndex == words.size()) {
-            return true; // All words placed successfully
+            return true;
         }
 
         String word = words.get(wordIndex);
 
-        // Try placing the word in every possible position and direction
+      
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
-                // Try horizontal placement
+                
                 if (canPlaceWord(word, row, col, true)) {
                     placeWord(word, row, col, true);
                     if (solve(wordIndex + 1)) {
                         return true;
                     }
-                    removeWord(word, row, col, true); // Backtrack
+                    removeWord(word, row, col, true); 
                 }
 
-                // Try vertical placement
+             
                 if (canPlaceWord(word, row, col, false)) {
                     placeWord(word, row, col, false);
                     if (solve(wordIndex + 1)) {
                         return true;
                     }
-                    removeWord(word, row, col, false); // Backtrack
+                    removeWord(word, row, col, false); 
                 }
             }
         }
 
-        return false; // No valid placement for this word
+        return false; 
     }
 
-    // Check if a word can be placed at the given position and direction
+  
     private static boolean canPlaceWord(String word, int row, int col, boolean horizontal) {
         if (horizontal) {
             if (col + word.length() > GRID_SIZE) return false;
@@ -88,7 +88,7 @@ public class CrosswordGeneratorBacktracking {
         return true;
     }
 
-    // Place a word in the grid at the given position and direction
+   
     private static void placeWord(String word, int row, int col, boolean horizontal) {
         if (horizontal) {
             for (int i = 0; i < word.length(); i++) {
@@ -101,7 +101,7 @@ public class CrosswordGeneratorBacktracking {
         }
     }
 
-    // Remove a word from the grid (used during backtracking)
+    
     private static void removeWord(String word, int row, int col, boolean horizontal) {
         if (horizontal) {
             for (int i = 0; i < word.length(); i++) {
@@ -114,7 +114,7 @@ public class CrosswordGeneratorBacktracking {
         }
     }
 
-    // Print the crossword grid
+  
     private static void printGrid() {
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
